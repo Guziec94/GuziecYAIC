@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YAIC", "YAIC\YAIC.csproj", "{81D32A4E-B34A-4945-8D23-CB8DCB4B2608}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81D32A4E-B34A-4945-8D23-CB8DCB4B2608}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81D32A4E-B34A-4945-8D23-CB8DCB4B2608}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81D32A4E-B34A-4945-8D23-CB8DCB4B2608}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81D32A4E-B34A-4945-8D23-CB8DCB4B2608}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0F99DAC-A175-4E44-B8B5-246908B0CC9B}
+	EndGlobalSection
+EndGlobal
