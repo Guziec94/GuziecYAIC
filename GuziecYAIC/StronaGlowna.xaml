@@ -1,0 +1,27 @@
+﻿<Page x:Class="GuziecYAIC.StronaGlowna"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GuziecYAIC"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600" Width="600" Height="400"
+      Title="StronaGlowna">
+
+    <Grid>
+        <Label Content="GuziecYAIC" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,25,0,0" FontSize="35"/>
+        <Label Content="Yet Another Internet Communicator" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,75,0,0" FontSize="20"/>
+
+        <Label Content="Adres IP" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="182,179,0,0"/>
+        <ComboBox x:Name="cboAdresIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Margin="240,179,0,0" VerticalContentAlignment="Center"/>
+        <Button x:Name="btnOdswiezWyborIP" Content="↻" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" FontSize="30" Padding="0,-10,0,0" Margin="388,178,0,0" Click="btnOdswiezWyborIP_Click" >
+            <Button.LayoutTransform>
+                <RotateTransform Angle="90"/>
+            </Button.LayoutTransform>
+        </Button>
+        <Label Content="Pseudonim" HorizontalAlignment="Left" Margin="166,214,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="240,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnPrzejdzDalej" Content="Przejdź dalej" HorizontalAlignment="Left" Margin="240,254,0,0" VerticalAlignment="Top" Width="120" Click="btnPrzejdzDalej_Click"/>
+
+    </Grid>
+</Page>
