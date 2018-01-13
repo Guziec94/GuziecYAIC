@@ -12,16 +12,20 @@
         <Label Content="GuziecYAIC" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,25,0,0" FontSize="35"/>
         <Label Content="Yet Another Internet Communicator" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,75,0,0" FontSize="20"/>
 
-        <Label Content="Adres IP" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="182,179,0,0"/>
-        <ComboBox x:Name="cboAdresIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Margin="240,179,0,0" VerticalContentAlignment="Center"/>
-        <Button x:Name="btnOdswiezWyborIP" Content="↻" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" FontSize="30" Padding="0,-10,0,0" Margin="388,178,0,0" Click="btnOdswiezWyborIP_Click" >
-            <Button.LayoutTransform>
-                <RotateTransform Angle="90"/>
-            </Button.LayoutTransform>
-        </Button>
-        <Label Content="Pseudonim" HorizontalAlignment="Left" Margin="166,214,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="240,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnPrzejdzDalej" Content="Przejdź dalej" HorizontalAlignment="Left" Margin="240,254,0,0" VerticalAlignment="Top" Width="120" Click="btnPrzejdzDalej_Click"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Margin="0 150 0 0">
+            <Label Content="Adres IP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100px" Height="30" HorizontalContentAlignment="Right" Margin="100 0 0 0"/>
+            <ComboBox x:Name="cboAdresIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="25 0 0 0" VerticalContentAlignment="Center"/>
+            <Button x:Name="btnOdswiezWyborIP" Content="↻" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="50" FontSize="30" Padding="0,-10,0,0" Margin="25 0 0 0" Click="btnOdswiezWyborIP_Click" >
+                <Button.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </Button.LayoutTransform>
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Margin="0 200 0 0">
+            <Label Content="Pseudonim" HorizontalAlignment="Left" Width="100" Height="30" Margin="100 0 0 0" HorizontalContentAlignment="Right" VerticalAlignment="Top"/>
+            <TextBox x:Name="txtPseudonim" HorizontalAlignment="Left" Height="30" Margin="25 0 0 0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225" MaxLength="30" VerticalContentAlignment="Center" KeyDown="txtPseudonim_KeyDown" />
+        </StackPanel>
+        <Button x:Name="btnPrzejdzDalej" Content="Przejdź dalej" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="btnPrzejdzDalej_Click"/>
 
     </Grid>
 </Page>

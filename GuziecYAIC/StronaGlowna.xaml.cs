@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -27,6 +30,9 @@ namespace GuziecYAIC
             InitializeComponent();
             InicjalizacjaWyboruAdresuIP();
             StatusBar.SetStatusBarText("GuziecYAIC - offline");
+
+            Application.Current.Properties["PortNasluchu"] = 32123;
+            Application.Current.Properties["AdresIPNasluchu"] = IPAddress.Parse(cboAdresIP.SelectedItem as string);
         }
 
         private void InicjalizacjaWyboruAdresuIP()
@@ -35,10 +41,9 @@ namespace GuziecYAIC
             {
                 foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
                 {
-                    string adres_ip = ip.Address.ToString();
-                    if (ip.IsDnsEligible && adres_ip.Length <= 15)
+                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork && ip.IsDnsEligible)
                     {
-                        cboAdresIP.Items.Add(adres_ip);
+                        cboAdresIP.Items.Add(ip.Address.ToString());
                     }
                 }
             }
@@ -47,8 +52,8 @@ namespace GuziecYAIC
 
         private void AdresIPcomboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string wybraneIP = cboAdresIP.SelectedItem as string;
-            System.Windows.Application.Current.Properties["AdresIP"] = wybraneIP;
+            IPAddress wybranyAdresIP = IPAddress.Parse(cboAdresIP.SelectedItem as string);
+            Application.Current.Properties["AdresIPNasluchu"] = wybranyAdresIP;
         }
 
         private void btnOdswiezWyborIP_Click(object sender, RoutedEventArgs e)
@@ -59,7 +64,38 @@ namespace GuziecYAIC
 
         private void btnPrzejdzDalej_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new GlownyPanel());
+            if (txtPseudonim.Text!="")
+            {
+                Application.Current.Properties["Pseudonim"] = txtPseudonim.Text;
+                if (Application.Current.Properties["AdresIPNasluchu"] != null)
+                {
+                    if (NasluchTCP.RozpocznijNasluch())
+                    {
+                        StatusBar.SetStatusBarText("");
+                        NavigationService.Navigate(new GlownyPanel());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nie udało się poprawnie utworzyć połączenia.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Najpierw należy wybrać adres IP.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aby kontynuować najpierw wprowadź pseudonim.");
+            }
+        }
+
+        private void txtPseudonim_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                btnPrzejdzDalej.RaiseEvent(new RoutedEventArgs(ButtonBase.ClickEvent));
+            }
         }
     }
 }
