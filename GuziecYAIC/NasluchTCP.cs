@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -14,7 +12,7 @@ namespace GuziecYAIC
     {
         public static IPAddress adresDoNasluchu;
         public static int portDoNasluchu;
-        static TcpListener serverSocket;
+        public static TcpListener serverSocket;
         static TcpClient clientSocket;
         public static bool serwerUruchomiony;
         static Task watekOczekujacyNaPolaczenia;
@@ -36,12 +34,25 @@ namespace GuziecYAIC
                 {
                     while (serwerUruchomiony)
                     {
-                        clientSocket = serverSocket.AcceptTcpClient();
-                        Console.WriteLine("new Client started!");
-                        handleClinet client = new handleClinet();
-                        client.UruchomKlientaPrzychodzacego(clientSocket);
+                        try
+                        {
+                            clientSocket = serverSocket.AcceptTcpClient();
+                            Console.WriteLine("new Client started!");
+                            handleClinet client = new handleClinet();
+                            client.UruchomKlientaPrzychodzacego(clientSocket);
+                        }
+                        catch (Exception ex)
+                        { }
                     }
-                    MessageBox.Show("Połączenie zostało zamknięte.");
+                    while(Rozmowy.kartyRozmow.Any())
+                    {
+                        Rozmowy.kartyRozmow.FirstOrDefault().ZakonczRozmowe();
+                    }
+                    // Zamnknięcie aplikacji po rozłączęniu wszystkich użytkowników
+                    Application.Current.Dispatcher.Invoke(()=> 
+                    {
+                        Application.Current.Shutdown();
+                    });
                 });
                 watekOczekujacyNaPolaczenia.Start();
                 return true;
@@ -68,21 +79,37 @@ namespace GuziecYAIC
     }
 
     //Class to handle each client request separatly
-    public class handleClinet    {        public void UruchomKlientaPrzychodzacego(TcpClient inClientSocket)        {
+    public class handleClinet
+    {
+        public void UruchomKlientaPrzychodzacego(TcpClient inClientSocket)
+        {
             string adresIP = ((IPEndPoint)inClientSocket.Client.RemoteEndPoint).Address.ToString();
             if (Rozmowy.kartyRozmow.Any(x => x.adresIPRozmowcy.ToString() == adresIP))
             {
                 MessageBox.Show("Nie można nawiązać rozmowy z tym adresem IP (prawdopodobnie taka konwersacja już trwa).");
                 return;
-            }            NetworkStream networkStream = inClientSocket.GetStream();
+            }
+            NetworkStream networkStream = inClientSocket.GetStream();
+            BinaryReader binaryReader = new BinaryReader(networkStream);
+            string pseudonimNawiazujacego = binaryReader.ReadString();
+            BinaryWriter binaryWriter = new BinaryWriter(networkStream);
+            binaryWriter.Write(Application.Current.Properties["Pseudonim"] as String);
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Rozmowy.DodajKarteNowejRozmowy(adresIP, networkStream);
-            });        }        public void UruchomKlientaWychodzacego(IPAddress adresIP)
+                Rozmowy.DodajKarteNowejRozmowy(pseudonimNawiazujacego, adresIP, networkStream);
+            });
+        }
+
+        public void UruchomKlientaWychodzacego(IPAddress adresIP)
         {
             if (Rozmowy.kartyRozmow.Any(x => x.adresIPRozmowcy.ToString() == adresIP.ToString()))
             {
                 MessageBox.Show("Nie można nawiązać rozmowy z tym adresem IP (prawdopodobnie taka konwersacja już trwa).");
+                return;
+            }
+            if (Rozmowy.kartyRozmow.Count >= 8)
+            {
+                MessageBox.Show("Zbyt wiele otwartych kart, nie można otworzyć kolejnego okna rozmowy.");
                 return;
             }
             var task = new Task(() =>
@@ -91,9 +118,13 @@ namespace GuziecYAIC
                 {
                     TcpClient outClientSocket = new TcpClient(adresIP.ToString(), NasluchTCP.portDoNasluchu);
                     NetworkStream networkStream = outClientSocket.GetStream();
+                    BinaryWriter binaryWriter = new BinaryWriter(networkStream);
+                    binaryWriter.Write(Application.Current.Properties["Pseudonim"] as String);
+                    BinaryReader binaryReader = new BinaryReader(networkStream);
+                    string pseudonimOdbierajacego = binaryReader.ReadString();
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        Rozmowy.DodajKarteNowejRozmowy(adresIP.ToString(), networkStream);
+                        Rozmowy.DodajKarteNowejRozmowy(pseudonimOdbierajacego, adresIP.ToString(), networkStream);
                     });
                 }
                 catch (Exception ex)
@@ -102,5 +133,6 @@ namespace GuziecYAIC
                 }
             });
             task.Start();
-        }    }
+        }
+    }
 }

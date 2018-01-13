@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuziecYAIC"
         mc:Ignorable="d"
-        Title="GuziecYAIC - Yet Another Internet Communicator" Width="600" Height="425" ResizeMode="CanMinimize">
+        Title="GuziecYAIC - Yet Another Internet Communicator" Width="600" Height="425" ResizeMode="CanMinimize" Closing="Window_Closing">
 
         <Grid>
             <Frame x:Name="frameZawartosc" NavigationUIVisibility="Hidden" DockPanel.Dock="Top"/>

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -30,12 +27,12 @@ namespace GuziecYAIC
             pasekRozmow.Items.Add(new KartaTworzeniaRozmowy());
         }
 
-        public static void DodajKarteNowejRozmowy(string adresIP, NetworkStream strumienSieciowy=null)
+        public static void DodajKarteNowejRozmowy(string pseudonim, string adresIP, NetworkStream strumienSieciowy)
         {
             kartyRozmow = kartyRozmow ?? new List<KartaRozmowy>();
             if (kartyRozmow.Count < 8) //3 rzędy po 3 karty
             {
-                KartaRozmowy kartaNowejRozmowy = new KartaRozmowy(IPAddress.Parse(adresIP), "pseudo", strumienSieciowy);//zamienić kiedyś na pseudonim pobrany podczas połączenia
+                KartaRozmowy kartaNowejRozmowy = new KartaRozmowy(pseudonim, IPAddress.Parse(adresIP), strumienSieciowy);
                 pasekRozmow.Items.Add(kartaNowejRozmowy);
                 kartyRozmow.Add(kartaNowejRozmowy);
             }

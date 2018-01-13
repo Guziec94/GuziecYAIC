@@ -8,7 +8,7 @@
       d:DesignHeight="370" d:DesignWidth="590">
     <Grid>
         <Label Content="Podaj adres IP rozmówcy" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtAdresIP" Text="123.132.234.243" MaxLength="15" HorizontalAlignment="Left" Height="26" Margin="157,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtAdresIP" MaxLength="15" HorizontalAlignment="Left" Height="26" Margin="157,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnRozpocznijRozmowe" Content="Rozpocznij rozmowę" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Click="btnRozpocznijRozmowe_Click"/>
     </Grid>
 </TabItem>
