@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GuziecYAIC
@@ -20,7 +22,12 @@ namespace GuziecYAIC
         {
             if (txtStatusBar != null)
             {
-                txtStatusBar.Content = tekst;
+                string przedrostek = "GuziecYAIC: ";
+                if (NasluchTCP.serwerUruchomiony)
+                {
+                    przedrostek += "(" + (Application.Current.Properties["AdresIPNasluchu"] as IPAddress).ToString() + "): ";
+                }
+                txtStatusBar.Content = przedrostek + tekst;
             }
         }
     }

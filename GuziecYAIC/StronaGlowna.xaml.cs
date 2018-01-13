@@ -29,7 +29,7 @@ namespace GuziecYAIC
             StatusBar.SetStatusBarText("Inicjalizacja");
             InitializeComponent();
             InicjalizacjaWyboruAdresuIP();
-            StatusBar.SetStatusBarText("GuziecYAIC - offline");
+            StatusBar.SetStatusBarText("Niepodłączony");
 
             Application.Current.Properties["PortNasluchu"] = 32123;
             Application.Current.Properties["AdresIPNasluchu"] = IPAddress.Parse(cboAdresIP.SelectedItem as string);
@@ -71,7 +71,7 @@ namespace GuziecYAIC
                 {
                     if (NasluchTCP.RozpocznijNasluch())
                     {
-                        StatusBar.SetStatusBarText("");
+                        StatusBar.SetStatusBarText("Łączenie");
                         NavigationService.Navigate(new GlownyPanel());
                     }
                     else

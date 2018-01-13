@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,11 +26,15 @@ namespace GuziecYAIC
     public partial class KartaRozmowy : TabItem
     {
         public Guid guid;
-        string pseudonimRozmowcy;
-        IPAddress adresIPRozmowcy;
-        ObservableCollection<Wiadomosc> listaWiadomosci;
+        public ObservableCollection<Wiadomosc> listaWiadomosci;
+        public string pseudonimRozmowcy;
+        public IPAddress adresIPRozmowcy;
+        NetworkStream strumienSieciowy;
+        BinaryWriter binaryWriter;
+        BinaryReader binaryReader;
+        Task odbieranieWiadomosci;
 
-        public KartaRozmowy(IPAddress adresIP, string pseudonim)
+        public KartaRozmowy(IPAddress adresIP, string pseudonim, NetworkStream strumienSieciowy)
         {
             InitializeComponent();
             adresIPRozmowcy = adresIP;
@@ -43,6 +49,23 @@ namespace GuziecYAIC
 
             Title = pseudonim + adresIP;
             txtTytulRozmowy.Text = String.Format("Rozmowa z {0} ({1})", pseudonimRozmowcy, adresIPRozmowcy);
+
+            this.strumienSieciowy = strumienSieciowy;
+            binaryWriter = new BinaryWriter(strumienSieciowy);
+            binaryReader = new BinaryReader(strumienSieciowy);
+            odbieranieWiadomosci = new Task(() => {
+                while (true)
+                {
+                    if (strumienSieciowy.DataAvailable)
+                    {
+                        Application.Current.Dispatcher.Invoke(() => 
+                        { 
+                            listaWiadomosci.Add(new Wiadomosc(TypWiadomosci.doMnie, binaryReader.ReadString()));
+                        });
+                    }
+                }
+            });
+            odbieranieWiadomosci.Start();
         }
 
         private void ListaWiadomosci_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -72,6 +95,7 @@ namespace GuziecYAIC
         {
             if (txtTrescWiadomosci.Text.Length > 0)
             {
+                binaryWriter.Write(txtTrescWiadomosci.Text);
                 listaWiadomosci.Add(new Wiadomosc(TypWiadomosci.odeMnie, txtTrescWiadomosci.Text));
                 txtTrescWiadomosci.Clear();
                 var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(stpaWiadomosci, 0);

@@ -33,7 +33,15 @@ namespace GuziecYAIC
             IPAddress ip;
             if (IPAddress.TryParse(txtAdresIP.Text, out ip) && ip.AddressFamily == AddressFamily.InterNetwork)
             {
-                Rozmowy.DodajKarteNowejRozmowy(txtAdresIP.Text);
+                try
+                {
+                    handleClinet client = new handleClinet();
+                    client.UruchomKlientaWychodzacego(ip);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Nie udało się nawiązać połączenia z adresem: " + ip.ToString() + ".\n" + ex.Message);
+                }
             }
             else
             {

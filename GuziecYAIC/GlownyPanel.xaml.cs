@@ -23,9 +23,9 @@ namespace GuziecYAIC
         public GlownyPanel()
         {
             InitializeComponent();
-            StatusBar.SetStatusBarText("GuziecYAIC - online");
             // Inicjalizuje passek rozmów oraz dodaje kartę umożliwiającą rozpoczęcie pierwszej rozmowy
             Rozmowy.Inicjalizuj(tabRozmowy);
+            StatusBar.SetStatusBarText("Gotowy do połączenia");
         }
     }
 }

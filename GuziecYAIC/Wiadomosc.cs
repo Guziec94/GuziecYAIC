@@ -17,7 +17,7 @@ namespace GuziecYAIC
         odeMnie = 2,
     }
 
-    class Wiadomosc
+    public class Wiadomosc
     {
         string tresc;
         TypWiadomosci typWiadomosci;
@@ -43,17 +43,17 @@ namespace GuziecYAIC
             {
                 case TypWiadomosci.inny:
                     stpaWiadomosc.HorizontalAlignment = HorizontalAlignment.Stretch;
-                    stpaWiadomosc.Background = new SolidColorBrush(Colors.OrangeRed);
+                    stpaWiadomosc.Background = new SolidColorBrush(Colors.Coral);
                     stpaWiadomosc.Margin = new Thickness(25, 5, 25, 5);
                     break;
                 case TypWiadomosci.doMnie:
                     stpaWiadomosc.HorizontalAlignment = HorizontalAlignment.Left;
-                    stpaWiadomosc.Background = new SolidColorBrush(Colors.LimeGreen);
+                    stpaWiadomosc.Background = new SolidColorBrush(Colors.GreenYellow);
                     stpaWiadomosc.Margin = new Thickness(10, 5, 25, 5);
                     break;
                 case TypWiadomosci.odeMnie:
                     stpaWiadomosc.HorizontalAlignment = HorizontalAlignment.Right;
-                    stpaWiadomosc.Background = new SolidColorBrush(Colors.AliceBlue);
+                    stpaWiadomosc.Background = new SolidColorBrush(Colors.LightSkyBlue);
                     stpaWiadomosc.Margin = new Thickness(25, 5, 10, 5);
                     break;
             }

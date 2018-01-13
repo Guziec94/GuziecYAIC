@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace GuziecYAIC
         {
             pasekRozmow = tabControl;
             DodajDomyslnaKarte();
+            kartyRozmow = new List<KartaRozmowy>();
         }
 
         /// <summary>
@@ -28,12 +30,12 @@ namespace GuziecYAIC
             pasekRozmow.Items.Add(new KartaTworzeniaRozmowy());
         }
 
-        public static void DodajKarteNowejRozmowy(string adresIP)
+        public static void DodajKarteNowejRozmowy(string adresIP, NetworkStream strumienSieciowy=null)
         {
             kartyRozmow = kartyRozmow ?? new List<KartaRozmowy>();
             if (kartyRozmow.Count < 8) //3 rzędy po 3 karty
             {
-                KartaRozmowy kartaNowejRozmowy = new KartaRozmowy(IPAddress.Parse("123.123.123.123"), "pseudo");//zamienić kiedyś na pseudonim pobrany podczas połączenia
+                KartaRozmowy kartaNowejRozmowy = new KartaRozmowy(IPAddress.Parse(adresIP), "pseudo", strumienSieciowy);//zamienić kiedyś na pseudonim pobrany podczas połączenia
                 pasekRozmow.Items.Add(kartaNowejRozmowy);
                 kartyRozmow.Add(kartaNowejRozmowy);
             }
