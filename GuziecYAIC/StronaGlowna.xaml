@@ -14,7 +14,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Margin="0 150 0 0">
             <Label Content="Adres IP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100px" Height="30" HorizontalContentAlignment="Right" Margin="100 0 0 0"/>
-            <ComboBox x:Name="cboAdresIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="25 0 0 0" VerticalContentAlignment="Center"/>
+            <ComboBox x:Name="cboAdresIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Height="30" Margin="25 0 0 0" VerticalContentAlignment="Center" SelectionChanged="AdresIPcomboBox_SelectionChanged"/>
             <Button x:Name="btnOdswiezWyborIP" Content="↻" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="50" FontSize="30" Padding="0,-10,0,0" Margin="25 0 0 0" Click="btnOdswiezWyborIP_Click" >
                 <Button.LayoutTransform>
                     <RotateTransform Angle="90"/>
